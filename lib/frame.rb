@@ -1,20 +1,40 @@
 class Frame
 
-	attr_reader :score, :first_shot, :second_shot
+	attr_reader :total_score, :first_shot_score, :second_shot_score
 
 	def initialize
-		@complete = false
+		@completed = false
 	end
 
-	def complete?
-		@complete
+	def score
+		@first_shot_score + @second_shot_score
 	end
 
-	def completed
-		@complete = true
+	def spare?
+		score == 10 and @first_shot_score != 10
 	end
 
-	def bowl(pins)
-		@first_shot ? @second_shot = pins : @first_shot = pins
+	def strike?
+		@first_shot_score == 10
+	end
+
+	def completed?
+		@completed
+	end
+
+	def complete
+		@completed = true
+	end
+
+	def first_shot(pins)
+		fail FrameOverError if completed?
+		@first_shot_score = pins
+		complete if strike?
+	end
+
+	def second_shot(pins)
+		fail FrameOverError if completed?
+		@second_shot_score = pins
+		complete
 	end
 end
