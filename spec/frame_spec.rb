@@ -85,6 +85,12 @@ describe 'Frame' do
 			expect(frame.strike?).to be(true)
 		end
 
+		it 'it cannot be a spare and a strike' do
+			frame.first_shot(10)
+			expect(frame.strike?).to be(true)
+			expect(frame.spare?).not_to be(true)
+		end
+
 		it 'raises error if second shot is taken' do
 			frame.first_shot(10)
 			expect { frame.second_shot(1) }.to raise_error(FrameOverError)

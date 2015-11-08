@@ -4,6 +4,8 @@ class Frame
 
 	def initialize
 		@completed = false
+		@first_shot_score = 0
+		@second_shot_score = 0
 	end
 
 	def score
@@ -11,7 +13,7 @@ class Frame
 	end
 
 	def spare?
-		score == 10 and @first_shot_score != 10
+		score == 10 and !strike?
 	end
 
 	def strike?
