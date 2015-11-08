@@ -1,0 +1,3 @@
+class FrameOverError < Exception
+
+end
