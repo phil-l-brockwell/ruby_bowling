@@ -15,7 +15,6 @@ class Frame
 	end
 
 	def bowl(pins)
-		@second_shot = pins if @first_shot
-		@first_shot = pins
+		@first_shot ? @second_shot = pins : @first_shot = pins
 	end
 end
