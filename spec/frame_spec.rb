@@ -1,4 +1,5 @@
 require 'frame'
+require 'frame_over_error'
 
 describe 'Frame' do
 
@@ -7,46 +8,91 @@ describe 'Frame' do
 	context 'when initialised' do
 
 		it 'has a score' do
-			expect(frame).to respond_to(:score)
+			expect(frame).to respond_to(:total_score)
 		end
 
 		it 'has a first shot' do
-			expect(frame).to respond_to(:first_shot)
+			expect(frame).to respond_to(:first_shot_score)
 		end
 
 		it 'has a second shot' do
-			expect(frame).to respond_to(:second_shot)
+			expect(frame).to respond_to(:second_shot_score)
 		end
 
 		it 'is not complete' do
-			expect(frame.complete?).to be(false)
+			expect(frame.completed?).to be(false)
 		end
 	end
 
 	context 'when bowling' do
 
 		it 'can check if it is complete' do
-			expect(frame).to respond_to(:complete?)
+			expect(frame).to respond_to(:completed?)
 		end
 
 		it 'can change its status to complete' do
-			frame.completed
-			expect(frame.complete?).to be(true)
+			frame.complete
+			expect(frame.completed?).to be(true)
 		end
 
-		it 'can receive a bowl' do
-			expect(frame).to respond_to(:bowl)
+		it 'can receive the first shot' do
+			expect(frame).to respond_to(:first_shot)
+		end
+
+		it 'can receive the second shot' do
+			expect(frame).to respond_to(:second_shot)
 		end
 
 		it 'adds the pins to the first shot' do
-			frame.bowl(1)
-			expect(frame.first_shot).to eq(1)
+			frame.first_shot(1)
+			expect(frame.first_shot_score).to eq(1)
 		end
 
 		it 'adds the pins to the second shot' do
-			frame.bowl(1)
-			frame.bowl(2)
-			expect(frame.second_shot).to eq(2)
+			frame.first_shot(1)
+			frame.second_shot(2)
+			expect(frame.second_shot_score).to eq(2)
+		end
+
+		it 'is complete after two balls have been bowled' do
+			frame.first_shot(1)
+			frame.second_shot(2)
+			expect(frame.completed?).to be(true)
+		end
+
+		it 'is complete if the first shot was a ten' do
+			frame.first_shot(10)
+			expect(frame.completed?).to be(true)
+		end
+	end
+
+	context 'when complete' do
+
+		it 'knows its score' do
+			frame.first_shot(1)
+			frame.second_shot(2) 
+			expect(frame.score).to eq(3)
+		end
+
+		it 'knows if it was a spare' do
+			frame.first_shot(5)
+			frame.second_shot(5)
+			expect(frame.spare?).to be(true)
+		end
+
+		it 'knows if it was a strike' do
+			frame.first_shot(10)
+			expect(frame.strike?).to be(true)
+		end
+
+		it 'raises error if second shot is taken' do
+			frame.first_shot(10)
+			expect { frame.second_shot(1) }.to raise_error(FrameOverError)
+		end
+
+		it 'raises an error if the first shot is taken twice' do
+			frame.first_shot(10)
+			expect { frame.first_shot(1) }.to raise_error(FrameOverError)
 		end
 	end
 end
