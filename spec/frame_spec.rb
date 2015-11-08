@@ -22,6 +22,10 @@ describe 'Frame' do
 		it 'is not complete' do
 			expect(frame.completed?).to be(false)
 		end
+
+		it 'has 10 pins remaining' do
+			expect(frame.pins_remaining).to be(10)
+		end
 	end
 
 	context 'when bowling' do
@@ -63,6 +67,11 @@ describe 'Frame' do
 		it 'is complete if the first shot was a ten' do
 			frame.first_shot(10)
 			expect(frame.completed?).to be(true)
+		end
+
+		it 'deducts each shot from the pins remaining' do
+			frame.first_shot(2)
+			expect(frame.pins_remaining).to eq(8)
 		end
 	end
 
