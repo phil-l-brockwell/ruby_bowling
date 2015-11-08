@@ -1,0 +1,3 @@
+class TooManyPinsError < Exception
+
+end

@@ -1,5 +1,6 @@
 require 'frame'
 require 'frame_over_error'
+require 'too_many_pins_error'
 
 describe 'Frame' do
 
@@ -72,6 +73,10 @@ describe 'Frame' do
 		it 'deducts each shot from the pins remaining' do
 			frame.first_shot(2)
 			expect(frame.pins_remaining).to eq(8)
+		end
+
+		it 'raises an error if the shot is greater than the pins remaining' do
+			expect { frame.first_shot(11) }.to raise_error(TooManyPinsError)
 		end
 	end
 

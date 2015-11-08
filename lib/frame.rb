@@ -32,6 +32,7 @@ class Frame
 
 	def first_shot(pins)
 		fail FrameOverError if completed?
+		fail TooManyPinsError if pins > @pins_remaining
 		@first_shot_score = pins
 		@pins_remaining -= pins
 		complete if strike?
@@ -39,6 +40,7 @@ class Frame
 
 	def second_shot(pins)
 		fail FrameOverError if completed?
+		fail TooManyPinsError if pins > @pins_remaining
 		@second_shot_score = pins
 		@pins_remaining -= pins
 		complete
