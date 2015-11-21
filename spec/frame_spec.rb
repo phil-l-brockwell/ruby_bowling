@@ -28,6 +28,15 @@ describe 'Frame' do
   end
 
   context 'when bowling' do
+    it 'can check if the first shot is complete' do
+      expect(frame).to respond_to(:first_shot_taken)
+    end
+
+    it 'changes the status of the first shot to complete after one shot' do
+      frame.bowl(1)
+      expect(frame.first_shot_taken).to eq(true)
+    end
+
     it 'can check if it is complete' do
       expect(frame).to respond_to(:completed)
     end

@@ -1,1 +1,4 @@
-A Bowling Scorecard using Ruby
+# A Bowling Scorecard using Ruby
+
+## Coming Soon...
+* Add Shot class

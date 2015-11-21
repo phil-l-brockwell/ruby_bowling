@@ -29,6 +29,10 @@ class Frame
     @completed = true
   end
 
+  def complete_first_shot
+    @first_shot_taken = true
+  end
+
   def bowl(pins)
     fail FrameOverError if completed
     fail TooManyPinsError if pins > pins_remaining
@@ -41,7 +45,7 @@ class Frame
   def first_shot(pins)
     @first_shot_score = pins
     complete if strike?
-    @first_shot_taken = true
+    complete_first_shot
   end
 
   def second_shot(pins)
