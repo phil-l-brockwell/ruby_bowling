@@ -3,9 +3,13 @@ require 'frame_over_error'
 require 'too_many_pins_error'
 
 describe 'Frame' do
-  let(:frame) { Frame.new }
+  let(:frame) { Frame.new(1) }
 
   context 'when initialised' do
+    it 'knows its number' do
+      expect(frame.number).to eq(1)
+    end
+
     it 'has a score' do
       expect(frame).to respond_to(:total_score)
     end
