@@ -1,15 +1,16 @@
 # class declaration for frame
 class Frame
-  attr_reader :total_score, :first_shot_score,
+  attr_reader :total_score, :first_shot_score, :number,
               :second_shot_score, :pins_remaining, :frame_completed
 
   PINS_IN_GAME = 10
 
-  def initialize
+  def initialize(number)
     @frame_completed   = false
     @first_shot_score  = 0
     @second_shot_score = 0
     @pins_remaining    = PINS_IN_GAME
+    @number = number
   end
 
   def score
