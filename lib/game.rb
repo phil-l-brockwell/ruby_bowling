@@ -8,6 +8,6 @@ class Game
 	end
 
 	def current_frame
-		@frames.each { |frame| return frame unless frame.frame_completed }
+		@frames.each { |frame| return frame unless frame.completed }
 	end
 end

@@ -23,7 +23,7 @@ describe 'Frame' do
     end
 
     it 'is not complete' do
-      expect(frame.frame_completed).to be(false)
+      expect(frame.completed).to be(false)
     end
 
     it 'has 10 pins remaining' do
@@ -33,12 +33,12 @@ describe 'Frame' do
 
   context 'when bowling' do
     it 'can check if it is complete' do
-      expect(frame).to respond_to(:frame_completed)
+      expect(frame).to respond_to(:completed)
     end
 
     it 'can change its status to complete' do
       frame.complete
-      expect(frame.frame_completed).to be(true)
+      expect(frame.completed).to be(true)
     end
 
     it 'can receive the first shot' do
@@ -63,12 +63,12 @@ describe 'Frame' do
     it 'is complete after two balls have been bowled' do
       frame.first_shot(1)
       frame.second_shot(2)
-      expect(frame.frame_completed).to be(true)
+      expect(frame.completed).to be(true)
     end
 
     it 'is complete if the first shot was a ten' do
       frame.first_shot(10)
-      expect(frame.frame_completed).to be(true)
+      expect(frame.completed).to be(true)
     end
 
     it 'deducts each shot from the pins remaining' do
