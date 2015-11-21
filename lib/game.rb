@@ -4,10 +4,11 @@ class Game
 	attr_reader :frames
 
 	def initialize(frames)
-		@frames = 1.upto(frames).map { |number| Frame.new(number) }
+		@frames = {}
+		1.upto(frames).each { |num| @frames[num] = Frame.new(num) }
 	end
 
 	def current_frame
-		@frames.each { |frame| return frame unless frame.completed }
+		@frames.each { |key, frame| return frame unless frame.completed }
 	end
 end

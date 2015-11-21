@@ -6,7 +6,7 @@ class Frame
   PINS_IN_GAME = 10
 
   def initialize(number)
-    @completed = false
+    @completed         = false
     @first_shot_score  = 0
     @second_shot_score = 0
     @pins_remaining    = PINS_IN_GAME
