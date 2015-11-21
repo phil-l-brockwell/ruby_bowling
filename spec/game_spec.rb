@@ -17,5 +17,10 @@ describe 'Game' do
     it 'can check the score of a frame' do
       expect(game.frames[1].score).to eq(0)
     end
+
+    # it 'updates the score of a frame after bowling' do
+    #   game.bowl(5)
+    #   expect(game.frames[1].score).to eq(5)
+    # end
   end
 end

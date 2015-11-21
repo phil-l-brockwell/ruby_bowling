@@ -1,7 +1,7 @@
 # class declaration for frame
 class Frame
-  attr_reader :total_score, :first_shot_score, :number,
-              :second_shot_score, :pins_remaining, :completed
+  attr_reader :first_shot_score, :number, :second_shot_score,
+              :pins_remaining, :completed, :first_shot_taken
 
   PINS_IN_GAME = 10
 
@@ -29,19 +29,23 @@ class Frame
     @completed = true
   end
 
-  def first_shot(pins)
+  def bowl(pins)
     fail FrameOverError if completed
-    fail TooManyPinsError if pins > @pins_remaining
-    @first_shot_score = pins
+    fail TooManyPinsError if pins > pins_remaining
     @pins_remaining -= pins
+    first_shot_taken ? second_shot(pins) : first_shot(pins)
+  end
+
+  private
+
+  def first_shot(pins)
+    @first_shot_score = pins
     complete if strike?
+    @first_shot_taken = true
   end
 
   def second_shot(pins)
-    fail FrameOverError if completed
-    fail TooManyPinsError if pins > @pins_remaining
     @second_shot_score = pins
-    @pins_remaining -= pins
     complete
   end
 end
