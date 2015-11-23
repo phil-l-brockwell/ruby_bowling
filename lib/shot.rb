@@ -1,5 +1,5 @@
+# Defines the shot class
 class Shot
-
   attr_reader :complete, :score
 
   def initialize

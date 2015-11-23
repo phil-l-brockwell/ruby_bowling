@@ -1,7 +1,7 @@
 require 'shot'
 
 describe 'Shot' do
-  let (:shot) { Shot.new }
+  let(:shot) { Shot.new }
 
   context 'when initialised' do
     it 'is not complete' do
@@ -10,7 +10,6 @@ describe 'Shot' do
   end
 
   context 'when bowling' do
-
     before { shot.hit(1) }
 
     it 'can update its score' do
