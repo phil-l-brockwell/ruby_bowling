@@ -25,7 +25,7 @@ class Frame
   end
 
   def complete?
-    @first_shot.taken and @second_shot.taken || strike?
+    @first_shot.taken && @second_shot.taken || strike?
   end
 
   def bowl(pins)
