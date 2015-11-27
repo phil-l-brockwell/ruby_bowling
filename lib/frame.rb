@@ -1,7 +1,7 @@
 require 'shot'
 # class declaration for frame
 class Frame
-  attr_reader :first_shot, :number, :second_shot, :pins_remaining
+  attr_reader :number, :first_shot, :second_shot
 
   PINS_IN_GAME = 10
 
@@ -32,7 +32,6 @@ class Frame
   end
 
   def bowl(pins)
-    fail FrameOverError if complete?
     fail TooManyPinsError if pins > pins_remaining
     first_shot.taken ? second_shot.hit(pins) : first_shot.hit(pins)
   end

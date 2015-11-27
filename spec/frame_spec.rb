@@ -102,11 +102,5 @@ describe 'Frame' do
       expect(frame.strike?).to be(true)
       expect(frame.spare?).not_to be(true)
     end
-
-    it 'raises error if second shot is taken' do
-      frame.bowl(1)
-      frame.bowl(2)
-      expect { frame.bowl(1) }.to raise_error(FrameOverError)
-    end
   end
 end
