@@ -4,8 +4,8 @@ describe 'Shot' do
   let(:shot) { Shot.new }
 
   context 'when initialised' do
-    it 'is not complete' do
-      expect(shot.complete).to eq(false)
+    it 'is not taken' do
+      expect(shot.taken).to eq(false)
     end
   end
 
@@ -16,8 +16,8 @@ describe 'Shot' do
       expect(shot.score).to eq(1)
     end
 
-    it 'is complete after a hit' do
-      expect(shot.complete).to eq(true)
+    it 'is taken after a hit' do
+      expect(shot.taken).to eq(true)
     end
   end
 end

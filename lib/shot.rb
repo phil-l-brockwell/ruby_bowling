@@ -1,13 +1,13 @@
 # Defines the shot class
 class Shot
-  attr_reader :complete, :score
+  attr_reader :taken, :score
 
   def initialize
-    @complete = false
+    @taken = false
   end
 
   def hit(pins)
     @score = pins
-    @complete = true
+    @taken = true
   end
 end
