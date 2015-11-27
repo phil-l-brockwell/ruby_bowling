@@ -33,6 +33,11 @@ describe 'Frame' do
       expect(frame.first_shot.taken).to eq(true)
     end
 
+    it 'knows how many pins are remaining' do
+      frame.bowl(1)
+      expect(frame.pins_remaining).to eq(9)
+    end
+
     it 'can check if it is complete' do
       expect(frame).to respond_to(:complete?)
     end

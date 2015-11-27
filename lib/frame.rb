@@ -6,14 +6,17 @@ class Frame
   PINS_IN_GAME = 10
 
   def initialize(number)
-    @first_shot     = Shot.new
-    @second_shot    = Shot.new
-    @pins_remaining = PINS_IN_GAME
-    @number         = number
+    @first_shot  = Shot.new
+    @second_shot = Shot.new
+    @number      = number
   end
 
   def score
     first_shot.score + second_shot.score
+  end
+
+  def pins_remaining
+    PINS_IN_GAME - score
   end
 
   def spare?
@@ -21,17 +24,16 @@ class Frame
   end
 
   def strike?
-    @first_shot.score == PINS_IN_GAME
+    first_shot.score == PINS_IN_GAME
   end
 
   def complete?
-    @first_shot.taken && @second_shot.taken || strike?
+    first_shot.taken && second_shot.taken || strike?
   end
 
   def bowl(pins)
     fail FrameOverError if complete?
     fail TooManyPinsError if pins > pins_remaining
-    @pins_remaining -= pins
-    @first_shot.taken ? @second_shot.hit(pins) : @first_shot.hit(pins)
+    first_shot.taken ? second_shot.hit(pins) : first_shot.hit(pins)
   end
 end
