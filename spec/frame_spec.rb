@@ -11,15 +11,15 @@ describe 'Frame' do
     end
 
     it 'has a first shot' do
-      expect(frame).to respond_to(:first_shot_score)
+      expect(frame).to respond_to(:first_shot)
     end
 
     it 'has a second shot' do
-      expect(frame).to respond_to(:second_shot_score)
+      expect(frame).to respond_to(:second_shot)
     end
 
     it 'is not complete' do
-      expect(frame.completed).to be(false)
+      expect(frame.complete?).to be(false)
     end
 
     it 'has 10 pins remaining' do
@@ -28,44 +28,35 @@ describe 'Frame' do
   end
 
   context 'when bowling' do
-    it 'can check if the first shot is complete' do
-      expect(frame).to respond_to(:first_shot_taken)
-    end
-
     it 'changes the status of the first shot to complete after one shot' do
       frame.bowl(1)
-      expect(frame.first_shot_taken).to eq(true)
+      expect(frame.first_shot.taken).to eq(true)
     end
 
     it 'can check if it is complete' do
-      expect(frame).to respond_to(:completed)
-    end
-
-    it 'can change its status to complete' do
-      frame.complete
-      expect(frame.completed).to be(true)
+      expect(frame).to respond_to(:complete?)
     end
 
     it 'adds the pins to the first shot' do
       frame.bowl(1)
-      expect(frame.first_shot_score).to eq(1)
+      expect(frame.first_shot.score).to eq(1)
     end
 
     it 'knows when the first shot has been taken' do
       frame.bowl(1)
-      expect(frame.first_shot_taken).to eq(true)
+      expect(frame.first_shot.taken).to eq(true)
     end
 
     it 'adds the pins to the second shot' do
       frame.bowl(1)
       frame.bowl(2)
-      expect(frame.second_shot_score).to eq(2)
+      expect(frame.second_shot.score).to eq(2)
     end
 
     it 'is complete after two balls have been bowled' do
       frame.bowl(1)
       frame.bowl(2)
-      expect(frame.completed).to be(true)
+      expect(frame.complete?).to be(true)
     end
 
     it 'is complete if the first shot was a ten' do
@@ -108,12 +99,8 @@ describe 'Frame' do
     end
 
     it 'raises error if second shot is taken' do
-      frame.bowl(10)
-      expect { frame.bowl(1) }.to raise_error(FrameOverError)
-    end
-
-    it 'raises an error if the first shot is taken twice' do
-      frame.bowl(10)
+      frame.bowl(1)
+      frame.bowl(2)
       expect { frame.bowl(1) }.to raise_error(FrameOverError)
     end
   end

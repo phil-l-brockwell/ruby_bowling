@@ -3,6 +3,7 @@ class Shot
   attr_reader :taken, :score
 
   def initialize
+  	@score = 0
     @taken = false
   end
 

@@ -8,7 +8,7 @@ class Game
   end
 
   def current_frame
-    @frames.each { |_, frame| return frame unless frame.completed }
+    @frames.each { |_, frame| return frame unless frame.complete? }
   end
 
   def bowl(pins)
