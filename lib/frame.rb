@@ -6,10 +6,10 @@ class Frame
   PINS_IN_GAME = 10
 
   def initialize(number)
-    @first_shot        = Shot.new
-    @second_shot       = Shot.new
-    @pins_remaining    = PINS_IN_GAME
-    @number            = number
+    @first_shot     = Shot.new
+    @second_shot    = Shot.new
+    @pins_remaining = PINS_IN_GAME
+    @number         = number
   end
 
   def score
@@ -21,11 +21,11 @@ class Frame
   end
 
   def strike?
-    first_shot.score == PINS_IN_GAME
+    @first_shot.score == PINS_IN_GAME
   end
 
   def complete?
-    @first_shot.taken and @second_shot.taken
+    @first_shot.taken and @second_shot.taken || strike?
   end
 
   def bowl(pins)

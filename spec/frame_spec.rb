@@ -61,7 +61,7 @@ describe 'Frame' do
 
     it 'is complete if the first shot was a ten' do
       frame.bowl(10)
-      expect(frame.completed).to be(true)
+      expect(frame.complete?).to be(true)
     end
 
     it 'deducts each shot from the pins remaining' do
