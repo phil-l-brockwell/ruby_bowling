@@ -1,7 +1,7 @@
 require 'shot'
 # class declaration for frame
 class Frame
-  attr_reader :number, :first_shot, :second_shot
+  attr_reader :number, :first_shot, :second_shot, :bonus
 
   PINS_IN_GAME = 10
 
@@ -9,10 +9,19 @@ class Frame
     @first_shot  = Shot.new
     @second_shot = Shot.new
     @number      = number
+    @bonus       = 0
+  end
+
+  def total
+    score + bonus
   end
 
   def score
     first_shot.score + second_shot.score
+  end
+
+  def add_bonus(pins)
+    @bonus += pins
   end
 
   def pins_remaining
@@ -20,7 +29,7 @@ class Frame
   end
 
   def spare?
-    score == PINS_IN_GAME && !strike?
+    !strike? && score == PINS_IN_GAME
   end
 
   def strike?
@@ -31,8 +40,12 @@ class Frame
     first_shot.taken && second_shot.taken || strike?
   end
 
+  def current_shot
+    first_shot.taken ? second_shot : first_shot
+  end
+
   def bowl(pins)
-    fail TooManyPinsError if pins > pins_remaining
-    first_shot.taken ? second_shot.hit(pins) : first_shot.hit(pins)
+    fail IllegalShotError if pins > pins_remaining
+    current_shot.knock_over pins
   end
 end
