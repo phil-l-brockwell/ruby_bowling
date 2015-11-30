@@ -1,7 +1,7 @@
 require 'game'
 
 describe 'Game' do
-  let(:game) { Game.new(10) }
+  let(:game) { Game.new }
 
   context 'when initialised' do
     it 'initialises with the correct amount of frames' do
@@ -35,6 +35,38 @@ describe 'Game' do
       game.bowl(1)
       game.bowl(1)
       expect(game.current_frame.number).to eq(2)
+    end
+
+    it 'moves to the next frame after a strike' do
+      game.bowl(10)
+      expect(game.current_frame.number).to eq(2)
+    end
+
+    it 'knows the previous frame' do
+      2.times { game.bowl(1) }
+      expect(game.previous_frame.number).to eq(1)
+    end
+
+    it 'adds bonus points if the previous frame was a strike' do
+      game.bowl(10)
+      game.bowl(1)
+      game.bowl(1)
+      expect(game.frames[1].total).to eq(12)
+    end
+
+    it 'adds bonus points if the previous frame was a spare' do
+      game.bowl(9)
+      game.bowl(1)
+      game.bowl(1)
+      game.bowl(1)
+      expect(game.frames[1].total).to eq(11)
+    end
+
+    it 'updates its total' do
+      game.bowl(1)
+      game.bowl(2)
+      game.bowl(3)
+      expect(game.total).to eq(6)
     end
   end
 end
