@@ -1,6 +1,5 @@
 require 'frame'
-require 'frame_over_error'
-require 'too_many_pins_error'
+require 'illegal_shot_error'
 
 describe 'Frame' do
   let(:frame) { Frame.new(1) }
@@ -25,14 +24,13 @@ describe 'Frame' do
     it 'has 10 pins remaining' do
       expect(frame.pins_remaining).to be(10)
     end
+
+    it 'has a bonus' do
+      expect(frame).to respond_to(:bonus)
+    end
   end
 
   context 'when bowling' do
-    it 'changes the status of the first shot to complete after one shot' do
-      frame.bowl(1)
-      expect(frame.first_shot.taken).to eq(true)
-    end
-
     it 'knows how many pins are remaining' do
       frame.bowl(1)
       expect(frame.pins_remaining).to eq(9)
@@ -69,13 +67,18 @@ describe 'Frame' do
       expect(frame.complete?).to be(true)
     end
 
-    it 'deducts each shot from the pins remaining' do
+    it 'deducts pins from the pins remaining' do
       frame.bowl(2)
       expect(frame.pins_remaining).to eq(8)
     end
 
     it 'raises an error if the shot is greater than the pins remaining' do
-      expect { frame.bowl(11) }.to raise_error(TooManyPinsError)
+      expect { frame.bowl(11) }.to raise_error(IllegalShotError)
+    end
+
+    it 'can add bonus points' do
+      frame.add_bonus(1)
+      expect(frame.bonus).to eq(1)
     end
   end
 
@@ -84,6 +87,13 @@ describe 'Frame' do
       frame.bowl(1)
       frame.bowl(2)
       expect(frame.score).to eq(3)
+    end
+
+    it 'includes bonus points in the total but not score' do
+      2. times { frame.bowl(1) }
+      frame.add_bonus(1)
+      expect(frame.score).to eq(2)
+      expect(frame.total).to eq(3)
     end
 
     it 'knows if it was a spare' do
