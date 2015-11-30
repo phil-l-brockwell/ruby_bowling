@@ -10,7 +10,7 @@ describe 'Shot' do
   end
 
   context 'when bowling' do
-    before { shot.hit(1) }
+    before { shot.knock_over(1) }
 
     it 'can update its score' do
       expect(shot.score).to eq(1)
