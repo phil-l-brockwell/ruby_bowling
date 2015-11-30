@@ -7,7 +7,7 @@ class Shot
     @taken = false
   end
 
-  def hit(pins)
+  def knock_over(pins)
     @score = pins
     @taken = true
   end
