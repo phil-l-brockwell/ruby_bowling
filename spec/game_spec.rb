@@ -32,8 +32,7 @@ describe 'Game' do
     end
 
     it 'updates the current frame when a frame is completed' do
-      game.bowl(1)
-      game.bowl(1)
+      2.times { game.bowl(1) }
       expect(game.current_frame.number).to eq(2)
     end
 
@@ -44,7 +43,7 @@ describe 'Game' do
 
     it 'knows the previous frame' do
       2.times { game.bowl(1) }
-      expect(game.previous_frame.number).to eq(1)
+      expect(game.pre_frame.number).to eq(1)
     end
 
     it 'adds bonus points if the previous frame was a strike' do
