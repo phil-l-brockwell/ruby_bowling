@@ -8,12 +8,16 @@ class Game
     @frames = Hash[(1..frames).map { |x| [x, Frame.new(x)] }]
   end
 
+  def current_frame
+    frames.each { |_, frame| return frame unless frame.complete? }
+  end
+
   def pre_frame
     frames[current_frame.number - 1] || EMPTY_FRAME
   end
 
-  def current_frame
-    frames.each { |_, frame| return frame unless frame.complete? }
+  def pre_pre_frame
+    frames[current_frame.number - 2] || EMPTY_FRAME
   end
 
   def total
@@ -21,6 +25,7 @@ class Game
   end
 
   def bowl(pins)
+    pre_pre_frame.bowl_bonus pins if pre_pre_frame.bonus_rolls > 0
     pre_frame.bowl_bonus pins if pre_frame.bonus_rolls > 0
     current_frame.bowl pins
   end
