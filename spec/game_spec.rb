@@ -46,6 +46,11 @@ describe 'Game' do
       expect(game.pre_frame.number).to eq(1)
     end
 
+    it 'knows the previous previous frame' do
+      4.times { game.bowl(1) }
+      expect(game.pre_pre_frame.number).to eq(1)
+    end
+
     it 'adds bonus points if the previous frame was a strike' do
       game.bowl(10)
       game.bowl(1)
@@ -53,11 +58,16 @@ describe 'Game' do
       expect(game.frames[1].total).to eq(12)
     end
 
+    it 'adds bonus points if the previous two frames were strikes' do
+      2.times { game.bowl(10) }
+      2.times { game.bowl(1) }
+      expect(game.frames[1].total).to eq(21)
+      expect(game.frames[2].total).to eq(12)
+    end
+
     it 'adds bonus points if the previous frame was a spare' do
       game.bowl(9)
-      game.bowl(1)
-      game.bowl(1)
-      game.bowl(1)
+      3.times { game.bowl(1) }
       expect(game.frames[1].total).to eq(11)
     end
 
