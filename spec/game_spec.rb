@@ -77,5 +77,10 @@ describe 'Game' do
       game.bowl(3)
       expect(game.total).to eq(6)
     end
+
+    it 'can bowl a perfect game' do
+      12.times { game.bowl(10) }
+      expect(game.total).to eq(300)
+    end
   end
 end
