@@ -3,7 +3,7 @@ require 'shot'
 class Frame
   attr_reader :number, :first_shot, :second_shot, :bonus_score, :bonus_rolls
 
-  PINS_IN_GAME = 10
+  PINS_IN_FRAME = 10
   BONUS_ROLL   = 1
   STRIKE_BONUS = 2 * BONUS_ROLL
   SPARE_BONUS  = 1 * BONUS_ROLL
@@ -29,15 +29,15 @@ class Frame
   end
 
   def pins_remaining
-    PINS_IN_GAME - score
+    PINS_IN_FRAME - score
   end
 
   def spare?
-    !strike? && score == PINS_IN_GAME
+    !strike? && score == PINS_IN_FRAME
   end
 
   def strike?
-    first_shot.score == PINS_IN_GAME
+    first_shot.score == PINS_IN_FRAME
   end
 
   def complete?
@@ -51,7 +51,7 @@ class Frame
   end
 
   private
-  
+
   def current_shot
     first_shot.taken ? second_shot : first_shot
   end
