@@ -2,10 +2,11 @@ require 'final_frame'
 
 describe 'FinalFrame' do
   context 'when bowling' do
-  	it 'is not complete if the first shot is a strike' do
-  		frame = FinalFrame.new(10)
-  		frame.bowl(10)
-  		expect(frame.complete?).to be(false)
-  	end
+    it 'behaves like a normal frame if it is not a spare/strike' do
+      test_frame = FinalFrame.new(10)
+      2.times { test_frame.bowl(1) }
+      expect(test_frame.total).to eq(2)
+      expect(test_frame.complete?).to eq(true)
+    end
   end
 end
