@@ -5,7 +5,8 @@ class Game
   EMPTY_FRAME = Frame.new(0)
 
   def initialize(frames = 10)
-    @frames = Hash[(1..frames).map { |x| [x, Frame.new(x)] }]
+    @frames = Hash[(1..frames - 1).map { |x| [x, Frame.new(x)] }]
+    @frames[frames] = FinalFrame.new(frames)
   end
 
   def current_frame
@@ -21,7 +22,7 @@ class Game
   end
 
   def total
-    frames.values.inject(0) { |a, frame| a + frame.total }
+    frames.values.inject(0) { |a, e| a + e.total }
   end
 
   def bowl(pins)
