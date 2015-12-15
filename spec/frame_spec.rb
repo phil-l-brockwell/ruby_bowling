@@ -70,11 +70,6 @@ describe 'Frame' do
     it 'raises an error if the shot is greater than the pins remaining' do
       expect { frame.bowl(11) }.to raise_error(IllegalShotError)
     end
-
-    it 'can add bonus points' do
-      frame.bowl_bonus(1)
-      expect(frame.bonus_score).to eq(1)
-    end
   end
 
   context 'when complete' do
@@ -85,10 +80,10 @@ describe 'Frame' do
     end
 
     it 'includes bonus points in the total but not score' do
-      2.times { frame.bowl(1) }
+      2.times { frame.bowl(5) }
       frame.bowl_bonus(1)
-      expect(frame.score).to eq(2)
-      expect(frame.total).to eq(3)
+      expect(frame.score).to eq(10)
+      expect(frame.total).to eq(11)
     end
 
     it 'knows if it was a spare' do
@@ -109,13 +104,13 @@ describe 'Frame' do
 
     it 'has two bonus rolls if it was a strike' do
       frame.bowl(10)
-      expect(frame.bonus_rolls).to eq(2)
+      expect(frame.bonus_shots.length).to eq(2)
     end
 
     it 'has one bonus roll if it was a spare' do
       frame.bowl(1)
       frame.bowl(9)
-      expect(frame.bonus_rolls).to eq(1)
+      expect(frame.bonus_shots.length).to eq(1)
     end
   end
 end
