@@ -26,8 +26,8 @@ class Game
   end
 
   def bowl(pins)
-    if pre_frame.bonus_rolls > 0
-      pre_pre_frame.bowl_bonus pins if pre_pre_frame.bonus_rolls > 0
+    if pre_frame.bonus?
+      pre_pre_frame.bowl_bonus pins if pre_pre_frame.bonus?
       pre_frame.bowl_bonus pins
     end
     current_frame.bowl pins
