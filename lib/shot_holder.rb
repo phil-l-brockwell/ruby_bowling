@@ -1,0 +1,2 @@
+class ShotHolder
+end
