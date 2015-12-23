@@ -6,17 +6,18 @@ class Frame
   PINS_IN_FRAME = 10
 
   def initialize(number)
+    @bonus_frame_number = 1
     @number      = number
     @shots       = { 1 => Shot.new, 2 => Shot.new }
-    @bonus_shots = []
+    @bonus_shots = {}
   end
 
   def bonus?
-    !bonus_shots.map(&:taken).all?
+    !bonus_shots.values.map(&:taken).all?
   end
 
   def bonus_score
-    @bonus_shots.inject(0) { |a, e| a + e.score }
+    bonus_shots.values.inject(0) { |a, e| a + e.score }
   end
 
   def total
@@ -60,7 +61,7 @@ class Frame
   end
 
   def current_bonus_shot
-    bonus_shots.each { |shot| return shot unless shot.taken }
+    bonus_shots.values.each { |shot| return shot unless shot.taken }
   end
 
   def check_bonus
@@ -69,6 +70,7 @@ class Frame
   end
 
   def add_bonus
-    bonus_shots.push Shot.new
+    bonus_shots[@bonus_frame_number] = Shot.new
+    @bonus_frame_number += 1
   end
 end
