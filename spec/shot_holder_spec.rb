@@ -39,8 +39,20 @@ describe 'ShotHolder' do
   end
 
   context 'when bowling' do
-    it 'knows if all the shots are taken' do
-      
+
+  let(:test_holder) { ShotHolder.new(2) }
+    it 'has a method which returns the current shot' do
+      expect(test_holder.current).to respond_to(:knock_over)
+    end
+
+    it 'knows when all the shots are taken' do
+      2.times { test_holder.current.knock_over(1) }
+      expect(test_holder.remaining?).to eq(false)
+    end
+
+    it 'can return the total of all shots' do
+      2.times { test_holder.current.knock_over(3) }
+      expect(test_holder.total).to eq(6)
     end
   end
 end
