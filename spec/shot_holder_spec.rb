@@ -54,5 +54,11 @@ describe 'ShotHolder' do
       2.times { test_holder.current.knock_over(3) }
       expect(test_holder.total).to eq(6)
     end
+
+    it 'can return the first shot' do
+      test_holder.current.knock_over(1)
+      test_holder.current.knock_over(2)
+      expect(test_holder.first.score).to eq(1)
+    end
   end
 end

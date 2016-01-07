@@ -9,20 +9,12 @@ describe 'Frame' do
       expect(frame.number).to eq(1)
     end
 
-    it 'has a hash of shots' do
-      expect(frame.shots[1]).to respond_to(:knock_over)
-    end
-
     it 'is not complete' do
       expect(frame.complete?).to be(false)
     end
 
     it 'has 10 pins remaining' do
       expect(frame.pins_remaining).to be(10)
-    end
-
-    it 'has a bonus' do
-      expect(frame).to respond_to(:bonus_score)
     end
   end
 
@@ -36,20 +28,15 @@ describe 'Frame' do
       expect(frame).to respond_to(:complete?)
     end
 
-    it 'adds the pins to the first shot' do
+    it 'adds the pins to the total' do
       frame.bowl(1)
-      expect(frame.shots[1].score).to eq(1)
+      expect(frame.total).to eq(1)
     end
 
-    it 'knows when the first shot has been taken' do
-      frame.bowl(1)
-      expect(frame.shots[1].taken).to eq(true)
-    end
-
-    it 'adds the pins to the second shot' do
+    it 'adds the pins of the second shot to the total' do
       frame.bowl(1)
       frame.bowl(2)
-      expect(frame.shots[2].score).to eq(2)
+      expect(frame.total).to eq(3)
     end
 
     it 'is complete after two balls have been bowled' do
@@ -104,13 +91,13 @@ describe 'Frame' do
 
     it 'has two bonus rolls if it was a strike' do
       frame.bowl(10)
-      expect(frame.bonus_shots.length).to eq(2)
+      expect(frame.bonus_shots.shots.length).to eq(2)
     end
 
     it 'has one bonus roll if it was a spare' do
       frame.bowl(1)
       frame.bowl(9)
-      expect(frame.bonus_shots.length).to eq(1)
+      expect(frame.bonus_shots.shots.length).to eq(1)
     end
   end
 end

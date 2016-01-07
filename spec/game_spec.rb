@@ -21,13 +21,12 @@ describe 'Game' do
     it 'updates the frame after bowling the first shot' do
       game.bowl(5)
       expect(game.frames[1].score).to eq(5)
-      expect(game.frames[1].shots[1].score).to eq(5)
     end
 
     it 'updates the frame after bowling the second shot' do
       game.bowl(5)
       game.bowl(2)
-      expect(game.frames[1].shots[2].score).to eq(2)
+      puts game.frames
       expect(game.frames[1].score).to eq(7)
     end
 

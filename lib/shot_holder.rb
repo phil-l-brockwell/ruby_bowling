@@ -1,3 +1,4 @@
+require 'shot'
 # class declaration for shot holder
 class ShotHolder
   attr_reader :iterator, :shots
@@ -19,13 +20,17 @@ class ShotHolder
   end
 
   def remaining?
-    !shots.values.map(&:taken).any?
+    !shots.values.map(&:taken).all?
   end
 
   def total
     shots.values.inject(0) { |a, e| a + e.score }
   end
-  
+
+  def first
+    shots[1]
+  end
+
   private
 
   def increment_iterator

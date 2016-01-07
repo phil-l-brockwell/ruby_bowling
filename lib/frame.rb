@@ -1,4 +1,4 @@
-require 'shot'
+require 'shot_holder'
 # class declaration for frame
 class Frame
   attr_reader :number, :shots, :bonus_shots
@@ -6,18 +6,13 @@ class Frame
   PINS_IN_FRAME = 10
 
   def initialize(number)
-    @bonus_frame_number = 1
     @number      = number
-    @shots       = { 1 => Shot.new, 2 => Shot.new }
-    @bonus_shots = {}
+    @shots       = ShotHolder.new(2)
+    @bonus_shots = ShotHolder.new
   end
 
   def bonus?
-    !bonus_shots.values.map(&:taken).all?
-  end
-
-  def bonus_score
-    bonus_shots.values.inject(0) { |a, e| a + e.score }
+    bonus_shots.remaining?
   end
 
   def total
@@ -25,52 +20,43 @@ class Frame
   end
 
   def score
-    shots.values.inject(0) { |a, e| a + e.score }
+    shots.total
+  end
+
+  def bonus_score
+    bonus_shots.total
   end
 
   def bowl_bonus(pins)
-    current_bonus_shot.knock_over pins
+    bonus_shots.current.knock_over pins
   end
 
   def pins_remaining
-    PINS_IN_FRAME - score
+    PINS_IN_FRAME - shots.total
   end
 
   def spare?
-    !strike? && score == PINS_IN_FRAME
+    !strike? && shots.total == PINS_IN_FRAME
   end
 
   def strike?
-    shots[1].score == PINS_IN_FRAME
+    shots.first.score == PINS_IN_FRAME
   end
 
   def complete?
-    shots.values.map(&:taken).all? || strike?
+    !shots.remaining? || strike?
   end
 
   def bowl(pins)
     fail IllegalShotError if pins > pins_remaining
-    current_shot.knock_over pins
+    shots.current.knock_over pins
     check_bonus
   end
 
   private
 
-  def current_shot
-    shots.values.each { |shot| return shot unless shot.taken }
-  end
-
-  def current_bonus_shot
-    bonus_shots.values.each { |shot| return shot unless shot.taken }
-  end
-
   def check_bonus
-    2.times { add_bonus } if strike?
-    add_bonus if spare?
-  end
-
-  def add_bonus
-    bonus_shots[@bonus_frame_number] = Shot.new
-    @bonus_frame_number += 1
+    2.times { bonus_shots.add_shot } if strike?
+    bonus_shots.add_shot if spare?
   end
 end
