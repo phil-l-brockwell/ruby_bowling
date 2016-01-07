@@ -26,7 +26,6 @@ describe 'Game' do
     it 'updates the frame after bowling the second shot' do
       game.bowl(5)
       game.bowl(2)
-      puts game.frames
       expect(game.frames[1].score).to eq(7)
     end
 
