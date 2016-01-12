@@ -40,6 +40,7 @@ describe 'ShotHolder' do
 
   context 'when bowling' do
     let(:test_holder) { ShotHolder.new(2) }
+
     it 'has a method which returns the current shot' do
       expect(test_holder.current).to respond_to(:knock_over)
     end
